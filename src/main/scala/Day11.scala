@@ -62,8 +62,7 @@ object Day11 extends Shared {
             falseTarget
           )
       }
-    def monkeys: Parser[List[Monkey]] =
-      rep(monkey)
+    def monkeys: Parser[List[Monkey]] = rep(monkey)
     def apply(input: String): List[Monkey] = parseAll(monkeys, input) match {
       case Success(result, _) => result
       case failure: NoSuccess => scala.sys.error(failure.msg)
@@ -76,39 +75,35 @@ object Day11 extends Shared {
     Iterator
       .iterate(monkeys) { (monkeys) =>
         monkeys.indices.foldLeft(monkeys) { (monkeys, index) =>
-          val newMonkeys = monkeys(index).items
-            .foldLeft(monkeys) { (monkeys, item) =>
-              val current = monkeys(index)
-              val inspectedValue = current.operation.eval(item) % lcd
-              val inspectedItem = inspectedValue / divideBy
-              val target =
-                if (inspectedItem % current.testDivisor == 0) current.trueTarget
-                else current.falseTarget
-              monkeys
-                .updated(
-                  target,
-                  monkeys(target)
-                    .copy(items = monkeys(target).items.appended(inspectedItem))
-                )
-            }
+          val items = monkeys(index).items
+          val newMonkeys = items.foldLeft(monkeys) { (monkeys, item) =>
+            val current = monkeys(index)
+            val inspectedItem = current.operation.eval(item) % lcd / divideBy
+            val target =
+              if (inspectedItem % current.testDivisor == 0) current.trueTarget
+              else current.falseTarget
+            monkeys
+              .updated(
+                target,
+                monkeys(target)
+                  .copy(items = monkeys(target).items.appended(inspectedItem))
+              )
+          }
           newMonkeys
             .updated(
               index,
               newMonkeys(index).copy(
                 items = Seq.empty,
-                inspections =
-                  newMonkeys(index).inspections + monkeys(index).items.size
+                inspections = newMonkeys(index).inspections + items.size
               )
             )
         }
       }
-      .take(rounds + 1)
-      .toSeq
-      .last
+      .slice(rounds, rounds + 1)
+      .next()
       .map(_.inspections)
       .sorted
-      .reverse
-      .take(2)
+      .takeRight(2)
       .product
 
   }
@@ -116,6 +111,6 @@ object Day11 extends Shared {
   def ans(input: String) = compute(input, 20, 3)
   def ans2(input: String) = compute(input, 10_000, 1)
 
-  // println(ans(input))
-  // println(ans2(input))
+  println(ans(input))
+  println(ans2(input))
 }
