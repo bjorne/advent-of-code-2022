@@ -2,12 +2,12 @@ import lib.Point
 
 object Day11 extends Shared {
   val rounds = 20
-  val items = """Starting items: (.+)""".r.unanchored
-  val operation = """Operation: new = old (.) (.+)?""".r.unanchored
-  val test = """Test: divisible by (.+)""".r.unanchored
-  val testTrue = """If true: throw to monkey (.+)""".r.unanchored
-  val testFalse = """If false: throw to monkey (.+)""".r.unanchored
-
+  val monkey = """Monkey .+:
+                 |  Starting items: (.+)
+                 |  Operation: new = old (.) (.+)
+                 |  Test: divisible by (.+)
+                 |    If true: throw to monkey (.+)
+                 |    If false: throw to monkey (.+)""".stripMargin.r.unanchored
   trait Operation {
     def eval(old: Long): Long
   }
@@ -39,18 +39,15 @@ object Day11 extends Shared {
   )
 
   def compute(input: String, rounds: Int, divideBy: Int) = {
-    val monkeys = input.split("\n\n").map { str =>
-      Monkey(
-        str match {
-          case items(items: String) => items.split(", ").map(_.toLong)
-        },
-        str match {
-          case operation(op: String, operand: String) => Operation(op, operand)
-        },
-        str match { case test(divisor: String) => divisor.toInt },
-        str match { case testTrue(target: String) => target.toInt },
-        str match { case testFalse(target: String) => target.toInt }
-      )
+    val monkeys = input.split("\n\n").map {
+      case monkey(items, op, operand, divisor, trueTarget, falseTarget) =>
+        Monkey(
+          items.split(", ").map(_.toLong),
+          Operation(op, operand),
+          divisor.toInt,
+          trueTarget.toInt,
+          falseTarget.toInt
+        )
     }
     val lcd = monkeys.map(_.testDivisor).product
     Iterator
