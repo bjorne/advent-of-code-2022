@@ -1,3 +1,4 @@
+import Day12.DOWN
 import jdk.internal.jimage.decompressor.SignatureParser.ParseResult
 import lib.Point
 
@@ -50,51 +51,31 @@ object Day12 extends Shared {
       }
   }
 
-  val BIG_NUMBER_BUT_FAR_FROM_INT_OVERFLOW = 100_000
-
-  private def findDistances(
-      points: Map[Point, Int],
-      from: Point
-  ): Map[Point, Int] =
-    Iterator
-      .iterate(
-        (
-          points.keys.toSet,
-          Map(from -> 0).withDefault(_ => BIG_NUMBER_BUT_FAR_FROM_INT_OVERFLOW)
-        )
-      ) { case (unvisited, distances) =>
-        val current = unvisited.minBy(distances)
-        Seq(UP, DOWN, LEFT, RIGHT)
-          .map(current + _)
-          .filter(points.contains)
-          .filter(p => points(p) >= points(current) - 1)
-          .foldLeft((unvisited - current, distances)) { (pair, neighbor) =>
-            pair match {
-              case (unvisited, distances) =>
-                val alt = distances(current) + 1
-                if (alt < distances(neighbor))
-                  (unvisited, distances.updated(neighbor, alt))
-                else
-                  (unvisited, distances)
-            }
-          }
+  def countSteps(points: Map[Point, Int], from: Point, to: Set[Point]): Int =
+    LazyList
+      .unfold((0, Seq(from))) { case (steps, next) =>
+        Option.when((to & next.toSet).isEmpty) {
+          val neighbors = next.flatMap { p =>
+            Seq(UP, DOWN, LEFT, RIGHT)
+              .map(p + _)
+              .filter(n => points.get(n).exists(_ >= points(p) - 1))
+          }.distinct
+          (steps + 1, (steps + 1, neighbors))
+        }
       }
-      .dropWhile(_._1.nonEmpty)
-      .take(1)
-      .next()
-      ._2
+      .last
 
   override def ans(input: String) = {
     val map = parseInput(input)
-    val distances = findDistances(map.points, map.end.get)
-    distances(map.start.get)
+    countSteps(map.points, map.end.get, Set(map.start.get))
   }
 
   override def ans2(input: String) = {
     val map = parseInput(input)
-    val distances = findDistances(map.points, map.end.get)
-    map.points.collect {
-      case (p, h) if h == 0 => distances(p)
-    }.min
+    countSteps(
+      map.points,
+      map.end.get,
+      map.points.collect { case (p, h) if h == 0 => p }.toSet
+    )
   }
 }
