@@ -1,7 +1,7 @@
-import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
-class Day9Test extends AnyFlatSpec with should.Matchers {
+class Day09Test extends DaySpec(Day09) {
+  dayDone(5858, 2602)
 
   "ans" should "work" in {
     val input =
@@ -14,7 +14,7 @@ class Day9Test extends AnyFlatSpec with should.Matchers {
         |L 5
         |R 2""".stripMargin
 
-    Day9.ans(input) should be(13)
+    Day09.ans(input) should be(13)
   }
 
   "ans2" should "work" in {
@@ -26,6 +26,6 @@ class Day9Test extends AnyFlatSpec with should.Matchers {
                   |D 10
                   |L 25
                   |U 20""".stripMargin
-    Day9.ans2(input) should be(36)
+    Day09.ans2(input) should be(36)
   }
 }

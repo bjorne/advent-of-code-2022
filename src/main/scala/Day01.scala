@@ -1,7 +1,7 @@
 import scala.io.Source
 
-object Day1 extends Shared {
-  def ans2(input: String) = input
+object Day01 extends Shared {
+  override def ans2(input: String) = input
     .split("\n\n")
     .map(_.split("\n").map(_.toInt).sum)
     .sorted
@@ -9,11 +9,11 @@ object Day1 extends Shared {
     .take(3)
     .sum
 
-  def ans(input: String) = input
+  override def ans(input: String) = input
     .split("\n\n")
     .map(_.split("\n").map(_.toInt).sum)
     .max
 
-  println(ans(input))
-  println(ans2(input))
+//  println(ans(input))
+//  println(ans2(input))
 }

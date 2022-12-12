@@ -1,7 +1,7 @@
 import scala.collection.mutable
 import scala.util.Try
 
-object Day5 extends Shared {
+object Day05 extends Shared {
 
   lazy val parts = """(?s)(.+)\n\n(.+)""".r
   lazy val move = """move (\d+) from (\d+) to (\d+)""".r
@@ -28,7 +28,7 @@ object Day5 extends Shared {
     (piles, instructions)
   }
 
-  def ans(input: String) = {
+  override def ans(input: String) = {
     val (piles, instructions) = parseInput(input)
     for {
       move <- instructions
@@ -37,7 +37,7 @@ object Day5 extends Shared {
     piles.map(_.top).mkString("")
   }
 
-  def ans2(input: String) = {
+  override def ans2(input: String) = {
     val (piles, instructions) = parseInput(input)
     for {
       move <- instructions
@@ -47,6 +47,6 @@ object Day5 extends Shared {
     }
     piles.map(_.top).mkString("")
   }
-  println(ans(input))
-  println(ans2(input))
+  // println(ans(input))
+  // println(ans2(input))
 }

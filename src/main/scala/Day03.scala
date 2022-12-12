@@ -1,4 +1,4 @@
-object Day3 extends Shared {
+object Day03 extends Shared {
 
   object C {
     val a: Int = 'a'.toInt
@@ -12,7 +12,7 @@ object Day3 extends Shared {
     case _                     => c - C.A + 27
   }
 
-  def ans(input: String) =
+  override def ans(input: String) =
     input
       .split("\n")
       .map(_.toCharArray.map(priority))
@@ -23,13 +23,13 @@ object Day3 extends Shared {
       }
       .sum
 
-  def ans2(input: String) = input
+  override def ans2(input: String) = input
     .split("\n")
     .map(_.toCharArray.map(priority))
     .grouped(3)
     .map(_.map(_.toSet).reduce(_ & _).head)
     .sum
 
-  println(ans(input))
-  println(ans2(input))
+  // println(ans(input))
+  // println(ans2(input))
 }

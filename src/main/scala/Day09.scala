@@ -1,6 +1,6 @@
 import lib.Point
 
-object Day9 extends Shared {
+object Day09 extends Shared {
   val directions = Map(
     "R" -> Point(1, 0),
     "U" -> Point(0, 1),
@@ -23,7 +23,7 @@ object Day9 extends Shared {
       visited: Set[Point] = Set.empty
   )
 
-  def ans(input: String) =
+  override def ans(input: String) =
     input
       .split("\n")
       .flatMap { case s"$direction $value" =>
@@ -43,7 +43,7 @@ object Day9 extends Shared {
       visited: Set[Point] = Set.empty
   )
 
-  def ans2(input: String) = input
+  override def ans2(input: String) = input
     .split("\n")
     .flatMap { case s"$direction $value" =>
       List.fill(value.toInt)(directions(direction))
@@ -56,6 +56,6 @@ object Day9 extends Shared {
     .visited
     .size
 
-  println(ans(input))
-  println(ans2(input))
+  // println(ans(input))
+  // println(ans2(input))
 }

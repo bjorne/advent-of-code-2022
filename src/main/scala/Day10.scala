@@ -16,11 +16,11 @@ object Day10 extends Shared {
       .zipWithIndex
   }
 
-  def ans(input: String) = run(input).collect {
+  override def ans(input: String) = run(input).collect {
     case (v, index) if checkpoints.contains(index + 1) => v * (index + 1)
   }.sum
 
-  def ans2(input: String) = {
+  override def ans2(input: String) = {
     val pixels = run(input)
       .foldLeft(Set.empty[Point]) { (pixels, pair) =>
         pair match {
@@ -39,6 +39,6 @@ object Day10 extends Shared {
     Point.drawPoints(pixels.map(p => p -> '#').toMap, padding = 0)
   }
 
-  println(ans(input))
-  println(ans2(input))
+  // println(ans(input))
+  // println(ans2(input))
 }

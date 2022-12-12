@@ -1,4 +1,4 @@
-object Day2 extends Shared {
+object Day02 extends Shared {
   lazy val Pair = """^([A-C]) ([X-Z])$""".r
 
   enum Hand {
@@ -48,7 +48,7 @@ object Day2 extends Shared {
     case _                                => Lose
   }
 
-  def ans(input: String) = input
+  override def ans(input: String) = input
     .split("\n")
     .toList
     .map { case Pair(a, b) =>
@@ -58,7 +58,7 @@ object Day2 extends Shared {
     }
     .sum
 
-  def ans2(input: String) = input
+  override def ans2(input: String) = input
     .split("\n")
     .toList
     .map { case Pair(a, b) =>
@@ -73,6 +73,6 @@ object Day2 extends Shared {
     }
     .sum
 
-  println(ans(input))
-  println(ans2(input))
+//  println(ans(input))
+//  println(ans2(input))
 }

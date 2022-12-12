@@ -1,7 +1,7 @@
-import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
-class Day11Test extends AnyFlatSpec with should.Matchers {
+class Day11Test extends DaySpec(Day11) {
+  dayDone(54253, 13119526120L)
 
   val input =
     """Monkey 0:

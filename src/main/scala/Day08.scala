@@ -2,7 +2,7 @@ import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.util.Try
 
-object Day8 extends Shared {
+object Day08 extends Shared {
 
   implicit class ArrayOps(a: Array[Int]) {
     def lastIndexWhereOr(fn: Int => Boolean)(or: => Int): Int =
@@ -21,7 +21,7 @@ object Day8 extends Shared {
   private def parseInput(input: String) =
     input.split("\n").map(_.split("").map(_.toInt))
 
-  def ans(input: String) = {
+  override def ans(input: String) = {
     val grid = parseInput(input)
     val rows = grid.size
     val cols = grid.head.size
@@ -41,7 +41,7 @@ object Day8 extends Shared {
     2 * rows + 2 * cols - 4 + visible.size
   }
 
-  def ans2(input: String) = {
+  override def ans2(input: String) = {
     val grid = parseInput(input)
     val rows = grid.size
     val cols = grid.head.size
@@ -61,6 +61,6 @@ object Day8 extends Shared {
     scores.max
   }
 
-  println(ans(input))
-  println(ans2(input))
+  // println(ans(input))
+  // println(ans2(input))
 }

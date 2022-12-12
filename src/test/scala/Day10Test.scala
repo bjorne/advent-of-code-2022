@@ -1,7 +1,13 @@
-import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
-class Day10Test extends AnyFlatSpec with should.Matchers {
+class Day10Test extends DaySpec(Day10) {
+  val ans2 = """###..#..#.#....#..#...##..##..####..##.
+               |#..#.#..#.#....#..#....#.#..#....#.#..#
+               |#..#.####.#....####....#.#......#..#..#
+               |###..#..#.#....#..#....#.#.##..#...####
+               |#....#..#.#....#..#.#..#.#..#.#....#..#
+               |#....#..#.####.#..#..##...###.####.#..#""".stripMargin
+  dayDone(15360, ans2)
 
   val input =
     """addx 15

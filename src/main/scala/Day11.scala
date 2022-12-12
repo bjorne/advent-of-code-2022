@@ -108,9 +108,9 @@ object Day11 extends Shared {
 
   }
 
-  def ans(input: String) = compute(input, 20, 3)
-  def ans2(input: String) = compute(input, 10_000, 1)
+  override def ans(input: String) = compute(input, 20, 3)
+  override def ans2(input: String) = compute(input, 10_000, 1)
 
-  println(ans(input))
-  println(ans2(input))
+  // println(ans(input))
+  // println(ans2(input))
 }

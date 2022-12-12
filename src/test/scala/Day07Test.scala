@@ -1,7 +1,8 @@
-import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 
-class Day7Test extends AnyFlatSpec with should.Matchers {
+class Day07Test extends DaySpec(Day07) {
+  dayDone(1334506, 7421137)
+
   val input =
     """$ cd /
       |$ ls
@@ -28,10 +29,10 @@ class Day7Test extends AnyFlatSpec with should.Matchers {
       |7214296 k""".stripMargin
 
   "ans" should "work" in {
-    Day7.ans(input) should be(94853 + 584)
+    Day07.ans(input) should be(94853 + 584)
   }
 
   "ans2" should "work" in {
-    Day7.ans2(input) should be(24933642)
+    Day07.ans2(input) should be(24933642)
   }
 }

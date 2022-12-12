@@ -2,7 +2,7 @@ import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.util.Try
 
-object Day7 extends Shared {
+object Day07 extends Shared {
 
   sealed trait LsEntry
   case class Dir(name: String) extends LsEntry
@@ -73,19 +73,19 @@ object Day7 extends Shared {
     buildTree("", sizes)
   }
 
-  def ans(input: String) =
+  override def ans(input: String) =
     extractTree(input).collect(_.totalSize < 100_000).map(_.totalSize).sum
 
   val DISK_SIZE = 70_000_000
   val MIN_REQUIRED_SPACE = 30_000_000
 
-  def ans2(input: String) = {
+  override def ans2(input: String) = {
     val tree: TreeNode = extractTree(input)
     val freeSpace = DISK_SIZE - tree.totalSize
     val spaceToFree = MIN_REQUIRED_SPACE - freeSpace
     tree.collect(_.totalSize > spaceToFree).map(_.totalSize).min
   }
 
-  println(ans(input))
-  println(ans2(input))
+  // println(ans(input))
+  // println(ans2(input))
 }
