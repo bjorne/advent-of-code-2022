@@ -18,10 +18,12 @@ object Day13 extends Shared {
         case (a: PacketList.List, b: PacketList.Number) =>
           compare(a, PacketList.List(Seq(b)))
         case (a: PacketList.List, b: PacketList.List) =>
-          a.items.zip(b.items).indexWhere(compare(_, _) != 0) match {
-            case -1 => a.items.length compare b.items.length
-            case x  => compare(a.items(x), b.items(x))
-          }
+          a.items
+            .zip(b.items)
+            .map(pair => compare(pair._1, pair._2))
+            .find(_ != 0)
+            .getOrElse(a.items.length compare b.items.length)
+
       }
     }
   }
