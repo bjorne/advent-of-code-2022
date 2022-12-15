@@ -1,26 +1,10 @@
 import jdk.internal.jimage.decompressor.SignatureParser.ParseResult
-import lib.Point
+import lib.{Grid, Point}
 
 import scala.util.parsing.combinator.RegexParsers
 
 object Day14 extends Shared {
   val Source = Point(500, 0)
-
-  case class Grid[T](points: Map[Point, T]) {
-    def apply(p: Point): Option[T] = points.get(p)
-
-    def draw(fn: T => Char): String =
-      Point.drawPoints(points.map(pair => (pair._1, fn(pair._2))))
-
-    def updated(p: Point, v: T): Grid[T] =
-      copy(points = points.updated(p, v))
-  }
-
-  object Grid {
-    def fill[T](points: Seq[Point], v: T): Grid[T] = Grid(
-      points.map(_ -> v).toMap
-    )
-  }
 
   def run(input: String)(isDone: (Point, Grid[Char]) => Boolean): Int = {
     val rock = input
