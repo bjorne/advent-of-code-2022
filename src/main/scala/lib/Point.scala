@@ -9,6 +9,19 @@ case class Point(x: Int = 0, y: Int = 0) {
   @targetName("minus")
   def -(other: Point): Point = Point(x - other.x, y - other.y)
 
+  def to(o: Point): Iterator[Point] = o match {
+    case Point(ox, oy) if ox == x =>
+      (y to oy by (oy - y).sign).iterator.map(Point(x, _))
+    case Point(ox, oy) if oy == y =>
+      (x to ox by (ox - x).sign).iterator.map(Point(_, y))
+    case _ => throw new IllegalArgumentException("Points not in line")
+  }
+
+  def up: Point = this + Point.up
+  def down: Point = this + Point.down
+  def left: Point = this + Point.left
+  def right: Point = this + Point.right
+
   override def toString: String = s"($x, $y)"
 }
 
@@ -29,4 +42,10 @@ object Point {
     }
     chars.transpose.map(_.mkString("")).reverse.mkString("\n")
   }
+
+  val origin = Point(0, 0)
+  val up = Point(0, 1)
+  val down = Point(0, -1)
+  val left = Point(-1, 0)
+  val right = Point(1, 0)
 }
