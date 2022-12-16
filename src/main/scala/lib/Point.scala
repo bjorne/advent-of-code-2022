@@ -10,6 +10,7 @@ case class Point(x: Int = 0, y: Int = 0) {
   def -(other: Point): Point = Point(x - other.x, y - other.y)
 
   def to(o: Point): Iterator[Point] = o match {
+    case p if p == this => Iterator.apply(this)
     case Point(ox, oy) if ox == x =>
       (y to oy by (oy - y).sign).iterator.map(Point(x, _))
     case Point(ox, oy) if oy == y =>
@@ -21,6 +22,9 @@ case class Point(x: Int = 0, y: Int = 0) {
   def down: Point = this + Point.down
   def left: Point = this + Point.left
   def right: Point = this + Point.right
+
+  def taxicabDistance: Int = x.abs + y.abs
+  def abs: Point = Point(x.abs, y.abs)
 
   override def toString: String = s"($x, $y)"
 }
